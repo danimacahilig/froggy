@@ -19,7 +19,7 @@ public class Turtle {
 			tw = 75;
 			th = 75;
 			
-			vx = -0.75;
+			vx = -2;
 			vy = 0;
 
 			img = getImage(fileName);
@@ -85,7 +85,7 @@ public class Turtle {
 				//change based on direction of your vx
 				//for teleporting after going off-screen
 				if(x < -75 ) {		//allows going back if they go off-screen
-					setx(1500);
+					setx(1000);
 					tx.setToTranslation(x, y);
 				}
 				

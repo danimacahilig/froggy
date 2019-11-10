@@ -95,9 +95,10 @@ public class Car {
 	
 	//move function that you don't need to understand rn 
 		public void move() {
-			tx.translate(cvx, cvy);
+			
 			cx+=cvx;
 			cy+=cvy;
+			tx.translate(cvx, cvy);
 			
 			//change based on direction of your vx
 			//for teleporting after going off-screen
@@ -106,7 +107,7 @@ public class Car {
 				tx.setToTranslation(cx, cy);
 			}
 			if(cx < -75 ) {		//allows going back if they go off-screen
-				setcx(900);
+				setcx(975);
 				tx.setToTranslation(cx, cy);
 			}
 		}
