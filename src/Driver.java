@@ -61,6 +61,7 @@ public class Driver extends JPanel implements ActionListener, KeyListener,
 	
 	//if the frog is on the turtle
 	boolean turtlecollision = false;
+	boolean carcollision = false;
 	
 	//lives and wins
 	int my_variable = 3; 
@@ -184,7 +185,7 @@ public class Driver extends JPanel implements ActionListener, KeyListener,
 		//turtle row 8
 		for (int i = 0; i<turtleRow8.length;i++) {
 			
-			turtleRow8[i].settvx(-1.5);
+			turtleRow8[i].settvx(-2);
 			turtleRow8[i].move();
 			
 			if(froggy.collided(
@@ -206,23 +207,27 @@ public class Driver extends JPanel implements ActionListener, KeyListener,
 		for (int i = 0; i<carRow2.length;i++) {
 			carRow1[i].move();
 			
+			//car-frog collision
 			if(froggy.collided(
 					carRow1[i].getcx(), 
 					carRow1[i].getcy(), 
 					carRow1[i].getcw(), 
 					carRow1[i].getch())) {
 				collision = "lost a life - collision";
-				//reset frog if you have lives still
+				carcollision = true;
+				
+				//reset frog and subtract one life if you have lives still
 				if(my_variable > 0){
 					froggy.setX(425);
 					froggy.setY(825);
 					my_variable--;	
 				}
-				if(my_variable == 0) {
-					collision = "";
-					lose = "";
-				}
 				
+			}
+			
+			//after resetting to 0, don't print out collision string
+			else if(carcollision == false && (froggy.getvy() != 0 || froggy.getvx() != 0)) {
+				collision = "";
 			}
 			
 		}
@@ -233,19 +238,26 @@ public class Driver extends JPanel implements ActionListener, KeyListener,
 			carRow2[i].setcvx(-1);
 			carRow2[i].move();
 			
+			//car-frog collision
 			if(froggy.collided(
 					carRow2[i].getcx(), 
 					carRow2[i].getcy(), 
 					carRow2[i].getcw(), 
 					carRow2[i].getch())) {
 				collision = "lost a life - collision";
-				//reset frog if you have lives still
+				carcollision = true;
+				//reset frog and subtract one life if you have lives still
 				if(my_variable > 0){
 					froggy.setX(425);
 					froggy.setY(825);
 					my_variable--;					
 				}
 				
+			}
+			
+			//after resetting to 0, don't print out collision string
+			else if(carcollision == false && (froggy.getvy() != 0 || froggy.getvx() != 0)) {
+				collision = "";
 			}
 			
 		}
@@ -256,19 +268,26 @@ public class Driver extends JPanel implements ActionListener, KeyListener,
 			carRow3[i].setcvx(1);
 			carRow3[i].move();
 			
+			//car-frog collision
 			if(froggy.collided(
 					carRow3[i].getcx(), 
 					carRow3[i].getcy(), 
 					carRow3[i].getcw(), 
 					carRow3[i].getch())) {
 				collision = "lost a life - collision";
-				//reset frog if you have lives still
+				carcollision = true;
+				//reset frog and subtract one life if you have lives still
 				if(my_variable > 0){
 					froggy.setX(425);
 					froggy.setY(825);
 					my_variable--;					
 				}
 				
+			}
+			
+			//after resetting to 0, don't print out collision string
+			else if(carcollision == false && (froggy.getvy() != 0 || froggy.getvx() != 0)) {
+				collision = "";
 			}
 			
 		}
@@ -278,20 +297,29 @@ public class Driver extends JPanel implements ActionListener, KeyListener,
 			
 			carRow4[i].setcvx(1.5);
 			carRow4[i].move();
-
+			System.out.println(carcollision);
+			
+			//car-frog collision
 			if(froggy.collided(
 					carRow4[i].getcx(), 
 					carRow4[i].getcy(), 
 					carRow4[i].getcw(), 
 					carRow4[i].getch())) {
 				collision = "lost a life - collision";
-				//reset frog if you have lives still
+				carcollision = true;
+				//reset frog and subtract one life if you have lives still
 				if(my_variable > 0){
 					froggy.setX(425);
 					froggy.setY(825);
-					my_variable--;					
+					my_variable--;
+					carcollision = false;
 				}
 				
+			}
+			
+			//after resetting to 0, don't print out collision string
+			else if(carcollision == false && (froggy.getvy() != 0 || froggy.getvx() != 0)) {
+				collision = "";
 			}
 			
 		}		
@@ -370,12 +398,18 @@ public class Driver extends JPanel implements ActionListener, KeyListener,
 			if(my_variable == 0) {
 				froggy.setvy(0);
 			}
+			else if ( win.equals("you win :D")) {
+				froggy.setvx(0);
+			}
 			else {
-			froggy.setvy(-10);
+				froggy.setvy(-10);
 			}
 		}
 		if(e.getKeyCode() == 40) {
 			if(my_variable == 0) {
+				froggy.setvy(0);
+			}
+			else if ( win.equals("you win :D")) {
 				froggy.setvy(0);
 			}
 			else {
@@ -387,6 +421,9 @@ public class Driver extends JPanel implements ActionListener, KeyListener,
 			if(my_variable == 0) {
 				froggy.setvx(0);
 			}
+			else if ( win.equals("you win :D")) {
+				froggy.setvx(0);
+			}
 			else if (turtlecollision) {
 				froggy.setvx(0);
 			}
@@ -396,6 +433,9 @@ public class Driver extends JPanel implements ActionListener, KeyListener,
 		}
 		if(e.getKeyCode() == 39) {
 			if(my_variable == 0) {
+				froggy.setvx(0);
+			}
+			else if ( win.equals("you win :D")) {
 				froggy.setvx(0);
 			}
 			else if (turtlecollision) {
